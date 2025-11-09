@@ -11,7 +11,7 @@ export const Footer = () => {
           {/* Brand */}
           <div>
             <h3 className="text-2xl font-bold text-gradient ">
-              Mehedi Hasan
+              Mehadi  Hasan
             </h3>
           </div>
 
@@ -22,7 +22,6 @@ export const Footer = () => {
                 "Home",
                 "Experience",
                 "Work",
-                "Contact",
                 "Reels",
                 "Technology",
               ].map((item) => (
@@ -67,7 +66,7 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8  border-t-2 flex flex-col md:flex-row items-center justify-center  text-sm text-muted-foreground">
-          <p>© {currentYear} Copyright Mehedi Hasan | All Rights Reserved.</p>
+          <p>© {currentYear} Copyright Mehadi  Hasan | All Rights Reserved.</p>
         </div>
       </div>
     </footer>

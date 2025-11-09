@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { name: "Home", href: "#home" },
-  { name: "Reels", href: "#reels" },
-  { name: "Experience", href: "#experience" },
-  { name: "Technology", href: "#technology" },
   { name: "Work", href: "#work" },
+  { name: "Reels", href: "#reels" },
+  { name: "Technology", href: "#technology" },
+  { name: "Experience", href: "#experience" },
   // { name: "Contact", href: "#contact" },
 ];
 

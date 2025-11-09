@@ -1,27 +1,20 @@
-import { useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 
 import {
-  SiFigma,
   SiAdobecreativecloud,
-  SiBlender,
   SiDavinciresolve,
   SiAdobephotoshop,
-  SiAdobeillustrator,
-  SiUnrealengine,
-  SiUnity,
   SiAdobeaftereffects,
-  SiCinema4D,
 } from "react-icons/si";
+import { CiMenuBurger } from "react-icons/ci";
 
 const technologies = [
-  { name: "Figma", icon: <SiFigma /> },
   { name: "Adobe Premiere Pro", icon: <SiAdobecreativecloud /> },
   { name: "After Effects", icon: <SiAdobeaftereffects /> },
   { name: "DaVinci Resolve", icon: <SiDavinciresolve /> },
   { name: "Photoshop", icon: <SiAdobephotoshop /> },
-  { name: "Illustrator", icon: <SiAdobeillustrator /> },
+  { name: "Capcut", icon: <CiMenuBurger /> },
 ];
 
 export const Technologies = () => {

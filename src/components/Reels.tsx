@@ -9,8 +9,12 @@ import {
 } from "@/components/ui/carousel";
 import { Volume2, VolumeX } from "lucide-react";
 
-// YouTube Shorts IDs (from your links)
 const reels = [
+  {
+    id: 4,
+    title: "Short 4",
+    videoId: "xoW3-1F9a4k",
+  },
   {
     id: 1,
     title: "Short 1",
@@ -29,14 +33,16 @@ const reels = [
 ];
 
 export const Reels = () => {
-  const [mutedStates, setMutedStates] = useState<{ [key: number]: boolean }>({});
+  const [mutedStates, setMutedStates] = useState<{ [key: number]: boolean }>(
+    {}
+  );
   const iframeRefs = useRef<{ [key: number]: HTMLIFrameElement | null }>({});
   const carouselRef = useRef<any>(null);
 
   // Initialize all videos as muted
   useEffect(() => {
     const initialMutedStates: { [key: number]: boolean } = {};
-    reels.forEach(reel => {
+    reels.forEach((reel) => {
       initialMutedStates[reel.id] = true;
     });
     setMutedStates(initialMutedStates);
@@ -44,26 +50,34 @@ export const Reels = () => {
 
   // Get iframe URL with all UI removed and autoplay enabled
   const getIframeUrl = (videoId: string, muted: boolean) => {
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${muted ? 1 : 0}&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&loop=1&playlist=${videoId}&disablekb=1&playsinline=1&vq=hd1080&enablejsapi=1&widget_referrer=null`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${
+      muted ? 1 : 0
+    }&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&loop=1&playlist=${videoId}&disablekb=1&playsinline=1&vq=hd1080&enablejsapi=1&widget_referrer=null`;
   };
 
   // Reliable mute toggle without restarting video
   const toggleMute = useCallback((id: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    
-    setMutedStates(prev => {
+
+    setMutedStates((prev) => {
       const newMuted = !prev[id];
       const iframe = iframeRefs.current[id];
-      
+
       if (iframe && iframe.contentWindow) {
         // Use YouTube API to toggle mute without restarting
         if (newMuted) {
-          iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+          iframe.contentWindow.postMessage(
+            '{"event":"command","func":"mute","args":""}',
+            "*"
+          );
         } else {
-          iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+          iframe.contentWindow.postMessage(
+            '{"event":"command","func":"unMute","args":""}',
+            "*"
+          );
         }
       }
-      
+
       return { ...prev, [id]: newMuted };
     });
   }, []);
@@ -74,8 +88,10 @@ export const Reels = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
-          const reelId = parseInt(entry.target.getAttribute('data-reel-id') || '');
+        entries.forEach((entry) => {
+          const reelId = parseInt(
+            entry.target.getAttribute("data-reel-id") || ""
+          );
           if (!reelId) return;
 
           const iframe = iframeRefs.current[reelId];
@@ -84,19 +100,22 @@ export const Reels = () => {
           if (entry.isIntersecting) {
             // Ensure video is playing when visible
             setTimeout(() => {
-              iframe.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+              iframe.contentWindow?.postMessage(
+                '{"event":"command","func":"playVideo","args":""}',
+                "*"
+              );
             }, 300);
           }
         });
       },
       {
         threshold: 0.7,
-        rootMargin: '50px'
+        rootMargin: "50px",
       }
     );
 
     // Observe all reel containers
-    reels.forEach(reel => {
+    reels.forEach((reel) => {
       const element = document.getElementById(`reel-container-${reel.id}`);
       if (element) observer.observe(element);
     });
@@ -107,12 +126,15 @@ export const Reels = () => {
   // Initialize all videos to play automatically
   useEffect(() => {
     const timer = setTimeout(() => {
-      reels.forEach(reel => {
+      reels.forEach((reel) => {
         const iframe = iframeRefs.current[reel.id];
         if (iframe && iframe.contentWindow) {
           // Start playing all videos initially (muted)
           setTimeout(() => {
-            iframe.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            iframe.contentWindow?.postMessage(
+              '{"event":"command","func":"playVideo","args":""}',
+              "*"
+            );
           }, 500);
         }
       });
@@ -126,21 +148,21 @@ export const Reels = () => {
       <div className="px-6">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="text-gradient">Motion Reels</span>
+            <span className="text-gradient">Verticle Videos</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Quick glimpses of my latest motion design work
           </p>
         </div>
 
-        <div className="max-w-screen-2xl mx-auto">
-          <Carousel 
+        <div className="container mx-auto">
+          <Carousel
             ref={carouselRef}
-            opts={{ 
-              align: "start", 
+            opts={{
+              align: "start",
               loop: true,
               dragFree: true,
-            }} 
+            }}
             className="w-full"
           >
             <CarouselContent className="-ml-4">
@@ -156,7 +178,7 @@ export const Reels = () => {
                   >
                     {/* YouTube Iframe - Completely clean UI, always playing */}
                     <iframe
-                      ref={(el) => iframeRefs.current[reel.id] = el}
+                      ref={(el) => (iframeRefs.current[reel.id] = el)}
                       src={getIframeUrl(reel.videoId, true)}
                       className="w-full h-full pointer-events-none"
                       title={reel.title}
@@ -179,7 +201,9 @@ export const Reels = () => {
                     {/* Sound indicator */}
                     {!mutedStates[reel.id] && (
                       <div className="absolute top-4 left-4 px-2 py-1 rounded-full bg-red-500/90 backdrop-blur-sm z-10">
-                        <span className="text-white text-xs font-semibold">SOUND ON</span>
+                        <span className="text-white text-xs font-semibold">
+                          SOUND ON
+                        </span>
                       </div>
                     )}
 

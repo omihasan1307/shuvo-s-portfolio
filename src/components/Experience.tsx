@@ -29,7 +29,7 @@ export const Experience = () => {
             <span className="text-gradient">Experience</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            2+ years of professional experience in motion design and animation
+            3+ years of professional experience in motion design and animation
           </p>
         </div>
 
